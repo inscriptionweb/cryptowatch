@@ -1,4 +1,4 @@
-### ethwatch.sh
+### cryptowatch.sh
 ### 20170915
 ### v0.3
 
