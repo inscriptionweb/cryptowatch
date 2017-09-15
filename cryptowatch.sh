@@ -55,7 +55,7 @@ do
         echo "$(date): ETH price is \$${ETHPRICE} - crashed?"
 
     else
-        if [[ "${}" -eq "${}"  ]]
+        if [[ "${__API_INTERVAL}" -eq "${__API_ORIG}" ]]
         then
             echo "$(date): ETH \$${ETHPRICE} - Alarm when ETH > \$${__WATCH_PRICE}; in for \$${__INVESTED}"
         else
