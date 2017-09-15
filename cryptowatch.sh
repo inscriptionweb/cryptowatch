@@ -1,6 +1,6 @@
 ### cryptowatch.sh
 ### 20170915
-### v0.3
+### v0.3.1
 
 ### Configurables
 
@@ -19,6 +19,7 @@ __API_URL="https://api.cryptowat.ch/markets/gdax/ethusd/price"
 ### Start script
 
 echo "API scrape URL: ${__API_URL}"
+__API_ORIG=${__API_INTERVAL}
 
 ### Loop through price
 
@@ -35,23 +36,32 @@ do
     if [[ "${ETHDOLLAR}" -gt ${__WATCH_PRICE} ]]
 
     then
+        __API_INTERVAL=$(( ${__API_INTERVAL} * 0.1 ))
         beep; beep; beep
         echo "$(date): ETH price has exceeded the watch price - current price is \$${ETHPRICE}"
 
     elif [[ "${ETHDOLLAR}" -lt $(printf %.0f $(echo "scale=0;${ETHAPIPRICE} * 0.50" | bc)) && "${ETHDOLLAR}" -gt $(printf %.0f $(echo "scale=0;${ETHAPIPRICE} * 0.05" | bc)) ]]
 
     then
+        __API_INTERVAL=$(( ${__API_INTERVAL} * 0.1 ))
         beep; beep; beep
         echo "$(date): ETH price has dropped significantly - current price is \$${ETHPRICE}"
 
     elif [[ "${ETHDOLLAR}" -lt $(printf %.0f $(echo "scale=0;${ETHAPIPRICE} * 0.75" | bc)) && "${ETHDOLLAR}" -gt $(printf %.0f $(echo "scale=0;${ETHAPIPRICE} * 0.50" | bc)) ]]
 
     then
+        __API_INTERVAL=$(( ${__API_INTERVAL} * 0.1 ))
         beep; beep; beep
         echo "$(date): ETH price is \$${ETHPRICE} - crashed?"
 
     else
-        echo "$(date): ETH \$${ETHPRICE} - Alarm when ETH > \$${__WATCH_PRICE}; in for \$${__INVESTED}"
+        if [[ "${}" -eq "${}"  ]]
+        then
+            echo "$(date): ETH \$${ETHPRICE} - Alarm when ETH > \$${__WATCH_PRICE}; in for \$${__INVESTED}"
+        else
+            __API_INTERVAL=${__API_ORIG}
+            echo "$(date): ETH \$${ETHPRICE} - Alarm when ETH > \$${__WATCH_PRICE}; in for \$${__INVESTED}"
+       fi
     fi
 
     sleep ${__API_INTERVAL}
