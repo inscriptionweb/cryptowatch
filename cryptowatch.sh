@@ -28,10 +28,11 @@ do
 
     # Scrape the API for the price in USD of 1 ETH
     ETHAPIPRICE=$(curl -sq ${__API_URL} | awk -F: '/price/ {print $2}' | tr -d '\ ')
+    
     # Ensure 2 decimal places for printing the real price since bash doesn't handle float well
     ETHPRICE=$(echo "scale=2;${ETHAPIPRICE} / 1" | bc)
+    
     # And grab the dollar amount for conditional comparison
-
     ETHDOLLAR=$(echo ${ETHPRICE} | cut -d\. -f1)
 
     if [[ "${ETHDOLLAR}" -gt ${__WATCH_PRICE} ]]
