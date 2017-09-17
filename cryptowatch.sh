@@ -25,6 +25,7 @@ __API_ORIG=${__API_INTERVAL}
 
 while :
 do
+
     # Scrape the API for the price in USD of 1 ETH
     ETHAPIPRICE=$(curl -sq ${__API_URL} | awk -F: '/price/ {print $2}' | tr -d '\ ')
     # Ensure 2 decimal places for printing the real price since bash doesn't handle float well
