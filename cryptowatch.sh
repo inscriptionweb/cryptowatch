@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ### cryptowatch.sh
 ### 20170915
 ### v0.3.1
